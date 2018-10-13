@@ -1,9 +1,15 @@
+# =============== #
+# Unity generated #
+# =============== #
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
+Temp/
+Obj/
+UnityGenerated/
 
 # Visual Studio cache directory
 .vs/
@@ -24,6 +30,19 @@ ExportedObj/
 *.pdb
 *.opendb
 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
@@ -34,3 +53,11 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# ============ #
+# for others   #
+# ============ #
+
+*.log #log files, for some plugins
+*.pyc #python bytecode cache, for some plugins.
+sysinfo.txt #Unity3D Generated File On Crash Reports
