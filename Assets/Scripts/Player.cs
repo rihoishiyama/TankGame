@@ -15,4 +15,14 @@ public class Player : MonoBehaviour
 			transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
 		}
 	}
+
+	private void OnCollisionEnter(Collision other)
+	{
+		if(other.gameObject.CompareTag("Bullet"))
+		{
+			Destroy(this.gameObject);
+			Destroy(other.gameObject);
+		}
+			
+	}
 }
