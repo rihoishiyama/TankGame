@@ -14,7 +14,7 @@ public class TapEffect : MonoBehaviour
 			// マウスのワールド座標までパーティクルを移動し、パーティクルエフェクトを1つ生成する
 			var pos = _camera.ScreenToWorldPoint(Input.mousePosition + _camera.transform.forward * 10);
 			tapEffect.transform.position = pos;
-			tapEffect.Emit(1);
+			tapEffect.Emit(2);
 		}
 	}
 }
