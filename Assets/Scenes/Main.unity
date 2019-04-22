@@ -919,7 +919,7 @@ MonoBehaviour:
   shellPrefab: {fileID: 1853334949596596, guid: 7457c45e7a6214211801bb61d44f92fe,
     type: 2}
   shotSpeed: 500
-  shotSound: {fileID: 8300000, guid: 89017782edb8743ea80d685f0c3858fe, type: 3}
+  shotSound: {fileID: 8300000, guid: edba4be1b572c4be59e77aa2777d49ce, type: 3}
 --- !u!4 &1516458013
 Transform:
   m_ObjectHideFlags: 0
@@ -927,7 +927,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1516458011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 1.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 61888048}
