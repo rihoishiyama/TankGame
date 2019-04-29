@@ -2,7 +2,7 @@
 
 public class Player : MonoBehaviour
 {
-	public float moveSpeed = 100f;
+	public float moveSpeed = 10f;
 	public Joystick joystick;
 
 	void Update()
@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
 		{
 			Destroy(this.gameObject);
 			Destroy(other.gameObject);
-		}
-			
+		}	
 	}
 }
