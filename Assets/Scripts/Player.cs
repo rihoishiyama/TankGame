@@ -4,6 +4,12 @@ public class Player : MonoBehaviour
 {
 	public float moveSpeed = 10f;
 	public Joystick joystick;
+	
+	void Start()
+    {
+        joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
+    }
+
 
 	void Update()
 	{
