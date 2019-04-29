@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 114878723762531378}
   - component: {fileID: 114287887896595964}
   m_Layer: 5
-  m_Name: ShotButton
+  m_Name: OnFireButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

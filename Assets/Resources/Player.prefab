@@ -416,9 +416,11 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114952434704730082}
+  - {fileID: 114249114151710034}
+  - {fileID: 4536291112479896}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114444752351541654
@@ -444,5 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc35c410c478240e9ab85eee9b7b84fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onFireButton: {fileID: 0}
+  shotBullet: {fileID: 114348152828921560}
   moveSpeed: 5
   joystick: {fileID: 0}

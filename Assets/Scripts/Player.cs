@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+	[SerializeField]
+	private Button onFireButton;
+	[SerializeField]
+	private Shotbullet shotBullet;
 	public float moveSpeed = 10f;
 	public Joystick joystick;
-	
+
 	void Start()
-    {
-        joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
-    }
+	{
+		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
+		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
+		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
+	}
 
 
 	void Update()
@@ -24,10 +31,10 @@ public class Player : MonoBehaviour
 
 	private void OnCollisionEnter(Collision other)
 	{
-		if(other.gameObject.CompareTag("Bullet"))
+		if (other.gameObject.CompareTag("Bullet"))
 		{
 			Destroy(this.gameObject);
 			Destroy(other.gameObject);
-		}	
+		}
 	}
 }
