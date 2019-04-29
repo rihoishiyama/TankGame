@@ -9,10 +9,9 @@ public class Shotbullet : MonoBehaviour
 	public AudioClip shotSound;
 	public static int bulletcount;
 
-	public void ShotButton()
+	public void ButtonShot()
 	{
 		// もしも「Fire1」というボタンが押されたら（条件）
-
 		if (bulletcount < 5)
 		{
 			Shot();
