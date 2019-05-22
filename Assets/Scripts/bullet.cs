@@ -6,20 +6,49 @@ public class bullet : MonoBehaviour
 {
 	public AudioClip reboundSound;
 	public int reboundcount;
+	private PhotonView photonView;
+	private PhotonTransformView photonTransformView;
+
+	void Start()
+	{
+		photonTransformView = GetComponent<PhotonTransformView>();
+		photonView = PhotonView.Get(this);
+	}
 
 	void OnCollisionEnter(Collision other)
 	{
-		reboundcount += 1;
 
-		if (reboundcount > 1)
+		if (other.gameObject.CompareTag("Wall"))
 		{
-			Shotbullet.bulletcount -= 1;
 
-			Destroy(this.gameObject);
+			reboundcount += 1;
+
+			if (reboundcount > 1)
+			{
+				if (photonView.isMine)
+				{
+					Shotbullet.bulletcount -= 1;
+				}
+
+				Destroy(this.gameObject);
+			}
+			else
+			{
+				AudioSource.PlayClipAtPoint(reboundSound, transform.position);
+			}
 		}
-		else
+
+
+		if (other.gameObject.CompareTag("Bullet"))
 		{
-			AudioSource.PlayClipAtPoint(reboundSound, transform.position);
+
+			if (photonView.isMine)
+			{
+				Shotbullet.bulletcount -= 1;
+			}
+			Destroy(this.gameObject);
+
 		}
 	}
+
 }

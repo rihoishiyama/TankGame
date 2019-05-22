@@ -1,35 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Shotbullet : MonoBehaviour
 {
+	public Transform shotPlace;
 	public GameObject shellPrefab;
 	public float shotSpeed;
 	public AudioClip shotSound;
 	public static int bulletcount;
+	private PhotonView photonView;
+	private PhotonTransformView photonTransformView;
+
+	void Start()
+	{
+		photonTransformView = GetComponent<PhotonTransformView>();
+		photonView = PhotonView.Get(this);
+	}
 
 	public void ButtonShot()
 	{
-		// もしも「Fire1」というボタンが押されたら（条件）
-		if (bulletcount < 5)
+		if (photonView.isMine)
 		{
-			Shot();
+			// もしも「Fire1」というボタンが押されたら（条件）
+			if (bulletcount < 5)
+			{
+				Shot();
 
-			// ②効果音を再生する。
-			AudioSource.PlayClipAtPoint(shotSound, transform.position);
-			bulletcount += 1;
-		}
-		else
-		{
-			AudioSource.PlayClipAtPoint(shotSound, transform.position);
+				// ②効果音を再生する。
+				AudioSource.PlayClipAtPoint(shotSound, transform.position);
+				bulletcount += 1;
+			}
+			else
+			{
+				AudioSource.PlayClipAtPoint(shotSound, transform.position);
+			}
 		}
 	}
 
 	public void Shot()
 	{
 		// プレファブから砲弾(Shell)オブジェクトを作成し、それをshellという名前の箱に入れる。
-		GameObject shell = (GameObject)Instantiate(shellPrefab, transform.position, Quaternion.identity);
+		GameObject shell = PhotonNetwork.Instantiate("bullet", shotPlace.position, Quaternion.identity, 0);
 
 		// Rigidbodyの情報を取得し、それをshellRigidbodyという名前の箱に入れる。
 		Rigidbody shellRigidbody = shell.GetComponent<Rigidbody>();
@@ -37,9 +50,4 @@ public class Shotbullet : MonoBehaviour
 		// shellRigidbodyにz軸方向の力を加える。
 		shellRigidbody.AddForce(transform.forward * shotSpeed);
 	}
-
-
-
-
-
 }
