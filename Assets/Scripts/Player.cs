@@ -36,14 +36,10 @@ public class Player : MonoBehaviour
 
 	private void OnCollisionEnter(Collision other)
 	{
-		if (photonView.isMine)
+		if (other.gameObject.CompareTag("Bullet"))
 		{
-			if (other.gameObject.CompareTag("Bullet"))
-			{
-				Destroy(this.gameObject);
-				Destroy(other.gameObject);
-			}
+			Destroy(this.gameObject);
+			Destroy(other.gameObject);
 		}
-
 	}
 }

@@ -19,34 +19,38 @@ public class bullet : MonoBehaviour
 
 	void OnCollisionEnter(Collision other)
 	{
-		
-		if (other.gameObject.CompareTag("Wall")){
+
+		if (other.gameObject.CompareTag("Wall"))
+		{
 
 			reboundcount += 1;
 
 			if (reboundcount > 1)
 			{
-				if (photonView.isMine){
-						Shotbullet.bulletcount -= 1;
-				}	
-					
+				if (photonView.isMine)
+				{
+					Shotbullet.bulletcount -= 1;
+				}
+
 				Destroy(this.gameObject);
 			}
 			else
 			{
-					AudioSource.PlayClipAtPoint(reboundSound, transform.position);
+				AudioSource.PlayClipAtPoint(reboundSound, transform.position);
 			}
+		}
+
+
+		if (other.gameObject.CompareTag("Bullet"))
+		{
+
+			if (photonView.isMine)
+			{
+				Shotbullet.bulletcount -= 1;
 			}
-		
-
-		if (other.gameObject.CompareTag("Bullet")){
-
-			if (photonView.isMine){
-						Shotbullet.bulletcount -= 1;
-				}	
 			Destroy(this.gameObject);
-			
-			}
+
+		}
 	}
 
 }
