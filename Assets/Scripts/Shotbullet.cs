@@ -37,13 +37,11 @@ public class Shotbullet : MonoBehaviour
 				AudioSource.PlayClipAtPoint(shotSound, transform.position);
 			}
 		}
-
 	}
 
 	public void Shot()
 	{
 		// プレファブから砲弾(Shell)オブジェクトを作成し、それをshellという名前の箱に入れる。
-		// GameObject shell = (GameObject)Instantiate(shellPrefab, transform.position, Quaternion.identity);
 		GameObject shell = PhotonNetwork.Instantiate("bullet", shotPlace.position, Quaternion.identity, 0);
 
 		// Rigidbodyの情報を取得し、それをshellRigidbodyという名前の箱に入れる。
@@ -52,9 +50,4 @@ public class Shotbullet : MonoBehaviour
 		// shellRigidbodyにz軸方向の力を加える。
 		shellRigidbody.AddForce(transform.forward * shotSpeed);
 	}
-
-
-
-
-
 }

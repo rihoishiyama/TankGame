@@ -9,13 +9,11 @@ public class bullet : MonoBehaviour
 	private PhotonView photonView;
 	private PhotonTransformView photonTransformView;
 
-
 	void Start()
 	{
 		photonTransformView = GetComponent<PhotonTransformView>();
 		photonView = PhotonView.Get(this);
 	}
-
 
 	void OnCollisionEnter(Collision other)
 	{
