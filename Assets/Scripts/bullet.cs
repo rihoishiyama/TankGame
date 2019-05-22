@@ -9,17 +9,32 @@ public class bullet : MonoBehaviour
 
 	void OnCollisionEnter(Collision other)
 	{
-		reboundcount += 1;
+		if (other.gameObject.CompareTag("Wall")){
 
-		if (reboundcount > 1)
-		{
-			Shotbullet.bulletcount -= 1;
+			reboundcount += 1;
+
+			if (reboundcount > 1)
+			{
+				Shotbullet.bulletcount -= 1;
+
+				Destroy(this.gameObject);
+			}
+			else
+			{
+				AudioSource.PlayClipAtPoint(reboundSound, transform.position);
+			}
+
+
+
+
+		}
+
+		if (other.gameObject.CompareTag("Bullet")){
 
 			Destroy(this.gameObject);
+			
 		}
-		else
-		{
-			AudioSource.PlayClipAtPoint(reboundSound, transform.position);
-		}
+
+
 	}
 }
