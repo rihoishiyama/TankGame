@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
 	private Shotbullet shotBullet;
 	public float moveSpeed = 10f;
 	public Joystick joystick;
+	private PhotonView photonView;
 
 	void Start()
 	{
+		photonView = PhotonView.Get(this);
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
@@ -20,21 +22,28 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		Vector3 moveVector = (Vector3.right * joystick.Horizontal + Vector3.forward * joystick.Vertical);
-
-		if (moveVector != Vector3.zero)
+		if (photonView.isMine)
 		{
-			transform.rotation = Quaternion.LookRotation(moveVector);
-			transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
+			Vector3 moveVector = (Vector3.right * joystick.Horizontal + Vector3.forward * joystick.Vertical);
+
+			if (moveVector != Vector3.zero)
+			{
+				transform.rotation = Quaternion.LookRotation(moveVector);
+				transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
+			}
 		}
 	}
 
 	private void OnCollisionEnter(Collision other)
 	{
-		if (other.gameObject.CompareTag("Bullet"))
+		if (photonView.isMine)
 		{
-			Destroy(this.gameObject);
-			Destroy(other.gameObject);
+			if (other.gameObject.CompareTag("Bullet"))
+			{
+				Destroy(this.gameObject);
+				Destroy(other.gameObject);
+			}
 		}
+
 	}
 }
