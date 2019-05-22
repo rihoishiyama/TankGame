@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Shotbullet : MonoBehaviour
 {
+	public Transform shotPlace;
 	public GameObject shellPrefab;
 	public float shotSpeed;
 	public AudioClip shotSound;
@@ -29,7 +31,8 @@ public class Shotbullet : MonoBehaviour
 	public void Shot()
 	{
 		// プレファブから砲弾(Shell)オブジェクトを作成し、それをshellという名前の箱に入れる。
-		GameObject shell = (GameObject)Instantiate(shellPrefab, transform.position, Quaternion.identity);
+		// GameObject shell = (GameObject)Instantiate(shellPrefab, transform.position, Quaternion.identity);
+		GameObject shell = PhotonNetwork.Instantiate("bullet", shotPlace.position, Quaternion.identity, 0);
 
 		// Rigidbodyの情報を取得し、それをshellRigidbodyという名前の箱に入れる。
 		Rigidbody shellRigidbody = shell.GetComponent<Rigidbody>();
