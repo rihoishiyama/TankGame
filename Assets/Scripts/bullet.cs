@@ -6,6 +6,8 @@ public class bullet : MonoBehaviour
 {
 	public AudioClip reboundSound;
 	public int reboundcount;
+	private PhotonView photonView;
+	private PhotonTransformView photonTransformView;
 
 
 	void Start()
