@@ -32,6 +32,7 @@ public class bullet : MonoBehaviour
 		if (other.gameObject.CompareTag("Bullet")){
 
 			Destroy(this.gameObject);
+			Shotbullet.bulletcount -= 1;
 			
 		}
 
