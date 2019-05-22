@@ -10,22 +10,34 @@ public class Shotbullet : MonoBehaviour
 	public float shotSpeed;
 	public AudioClip shotSound;
 	public static int bulletcount;
+	private PhotonView photonView;
+	private PhotonTransformView photonTransformView;
+
+	void Start()
+	{
+		photonTransformView = GetComponent<PhotonTransformView>();
+		photonView = PhotonView.Get(this);
+	}
 
 	public void ButtonShot()
 	{
-		// もしも「Fire1」というボタンが押されたら（条件）
-		if (bulletcount < 5)
+		if (photonView.isMine)
 		{
-			Shot();
+			// もしも「Fire1」というボタンが押されたら（条件）
+			if (bulletcount < 5)
+			{
+				Shot();
 
-			// ②効果音を再生する。
-			AudioSource.PlayClipAtPoint(shotSound, transform.position);
-			bulletcount += 1;
+				// ②効果音を再生する。
+				AudioSource.PlayClipAtPoint(shotSound, transform.position);
+				bulletcount += 1;
+			}
+			else
+			{
+				AudioSource.PlayClipAtPoint(shotSound, transform.position);
+			}
 		}
-		else
-		{
-			AudioSource.PlayClipAtPoint(shotSound, transform.position);
-		}
+
 	}
 
 	public void Shot()
