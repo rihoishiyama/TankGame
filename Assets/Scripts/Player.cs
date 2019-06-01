@@ -21,30 +21,24 @@ public class Player : Photon.MonoBehaviour
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
-		
 	}
 
-	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
-
-
+	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	// {
 	// 	if (stream.isWriting)
 	// 	{
 	// 		stream.SendNext(transform.position);
-    //    		stream.SendNext(transform.rotation);
+	// 		stream.SendNext(transform.rotation);
 
-	// 		 //データの送信
+	// 		//データの送信
 	// 	}
 	// 	else
 	// 	{
-	// 		 //データの受信
-    //         transform.position = (Vector3)stream.ReceiveNext();
-    //         transform.rotation = (Quaternion)stream.ReceiveNext();
-	// 	}		
+	// 		//データの受信
+	// 		transform.position = (Vector3)stream.ReceiveNext();
+	// 		transform.rotation = (Quaternion)stream.ReceiveNext();
+	// 	}
 	// }
-
-
-
-
 
 	void Update()
 	{
