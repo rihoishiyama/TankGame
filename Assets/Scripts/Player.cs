@@ -11,15 +11,28 @@ public class Player : MonoBehaviour
 	private PhotonView photonView;
 	[SerializeField]
 	private PhotonTransformView photonTransformView;
+	[SerializeField]
+	private Rigidbody playerRigid;
+	[SerializeField]
+	private Transform playerTransform;
 	public float moveSpeed = 10f;
 	public Joystick joystick;
-	
+
 
 	void Start()
 	{
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
+	}
+
+	public void FixedUpdate()
+	{
+		if (!photonView.isMine)
+		{
+			playerRigid.position = Vector3.MoveTowards(playerRigid.position, playerTransform.position, Time.fixedDeltaTime);
+			playerRigid.rotation = Quaternion.RotateTowards(playerRigid.rotation, playerTransform.rotation, Time.fixedDeltaTime * 100.0f);
+		}
 	}
 
 
@@ -43,6 +56,25 @@ public class Player : MonoBehaviour
 		{
 			Destroy(this.gameObject);
 			Destroy(other.gameObject);
+		}
+	}
+
+	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		Rigidbody rigidbody = this.gameObject.GetComponent<Rigidbody>();
+		if (stream.isWriting)
+		{
+			stream.SendNext(rigidbody.position);
+			stream.SendNext(rigidbody.rotation);
+			stream.SendNext(rigidbody.velocity);
+		}
+		else
+		{
+			playerTransform.position = (Vector3)stream.ReceiveNext();
+			playerTransform.rotation = (Quaternion)stream.ReceiveNext();
+			rigidbody.velocity = (Vector3)stream.ReceiveNext();
+			float lag = Mathf.Abs((float)(PhotonNetwork.time - info.timestamp));
+			playerTransform.position += (rigidbody.velocity * lag);
 		}
 	}
 }
