@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class bullet : Photon.MonoBehaviour
 {
+	[SerializeField]
+	private PhotonView photonView;
+	[SerializeField]
+	private PhotonTransformView photonTransformView;
 	public AudioClip reboundSound;
 	public int reboundcount;
-	private PhotonView photonView;
-	private PhotonTransformView photonTransformView;
-
-	void Start()
-	{
-		photonTransformView = GetComponent<PhotonTransformView>();
-		photonView = PhotonView.Get(this);
-	}
 
 	void OnCollisionEnter(Collision other)
 	{
@@ -38,7 +34,6 @@ public class bullet : Photon.MonoBehaviour
 			}
 		}
 
-
 		if (other.gameObject.CompareTag("Bullet"))
 		{
 
@@ -61,5 +56,4 @@ public class bullet : Photon.MonoBehaviour
 
 		}
 	}
-
 }

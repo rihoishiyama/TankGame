@@ -8,15 +8,16 @@ public class Player : Photon.MonoBehaviour
 	private Button onFireButton;
 	[SerializeField]
 	private Shotbullet shotBullet;
+	[SerializeField]
+	private PhotonView photonView;
+	[SerializeField]
+	private PhotonTransformView photonTransformView;
 	public float moveSpeed = 10f;
 	public Joystick joystick;
-	private PhotonView photonView;
-	
 
 
 	void Start()
 	{
-		photonView = PhotonView.Get(this);
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
