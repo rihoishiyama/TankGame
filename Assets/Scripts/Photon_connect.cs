@@ -25,7 +25,7 @@ public class Photon_connect : MonoBehaviour
         m_photonView = player.GetComponent<PhotonView>();
         int ownerID = m_photonView.ownerId;
         Vector3 playerPos = player.transform.position;
-        playerPos = startPos[ownerID - 1];
+        playerPos = startPos[(ownerID - 1) % 4];
         player.transform.position = playerPos;
     }
 	// 生成するcubeの座標をランダム生成
