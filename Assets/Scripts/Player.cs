@@ -61,20 +61,22 @@ public class Player : MonoBehaviour
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
-		Rigidbody rigidbody = this.gameObject.GetComponent<Rigidbody>();
-		if (stream.isWriting)
+		if (photonView.isMine)
 		{
-			stream.SendNext(rigidbody.position);
-			stream.SendNext(rigidbody.rotation);
-			stream.SendNext(rigidbody.velocity);
-		}
-		else
-		{
-			playerTransform.position = (Vector3)stream.ReceiveNext();
-			playerTransform.rotation = (Quaternion)stream.ReceiveNext();
-			rigidbody.velocity = (Vector3)stream.ReceiveNext();
-			float lag = Mathf.Abs((float)(PhotonNetwork.time - info.timestamp));
-			playerTransform.position += (rigidbody.velocity * lag);
+			if (stream.isWriting)
+			{
+				stream.SendNext(playerRigid.position);
+				stream.SendNext(playerRigid.rotation);
+				stream.SendNext(playerRigid.velocity);
+			}
+			else
+			{
+				playerTransform.position = (Vector3)stream.ReceiveNext();
+				playerTransform.rotation = (Quaternion)stream.ReceiveNext();
+				playerRigid.velocity = (Vector3)stream.ReceiveNext();
+				float lag = Mathf.Abs((float)(PhotonNetwork.time - info.timestamp));
+				playerTransform.position += (playerRigid.velocity * lag);
+			}
 		}
 	}
 }
