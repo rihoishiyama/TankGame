@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c22589ae6de4fdabbfefa281f24275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 114302851869836690}
+  photonTransformView: {fileID: 114746576111561124}
   reboundSound: {fileID: 8300000, guid: 8bcd7da04ef714182bd4e81afb212407, type: 3}
   reboundcount: 0
 --- !u!114 &114746576111561124
