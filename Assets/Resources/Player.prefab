@@ -111,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1484419413763736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.8}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4283056968577340}
@@ -340,8 +340,8 @@ MonoBehaviour:
   - {fileID: 114348152828921560}
   - {fileID: 114180096286127724}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114180096286127724
@@ -485,6 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 726736c0523494fcc893c235e856cb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 114063422904798140}
+  photonTransformView: {fileID: 114180096286127724}
   shotPlace: {fileID: 4536291112479896}
   shellPrefab: {fileID: 1853334949596596, guid: 7457c45e7a6214211801bb61d44f92fe,
     type: 2}
@@ -513,8 +515,8 @@ MonoBehaviour:
   - {fileID: 114952434704730082}
   - {fileID: 114249114151710034}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114444752351541654
@@ -528,7 +530,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0386704aab8f545f1af76ca43819d729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 6
+  photonView: {fileID: 114402834695451356}
+  photonTransformView: {fileID: 114249114151710034}
+  m_speed: 5
 --- !u!114 &114952434704730082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -543,5 +547,7 @@ MonoBehaviour:
   onFireButton: {fileID: 114287887896595964, guid: 09b1924822293495eb5ade7a552aeb29,
     type: 2}
   shotBullet: {fileID: 114348152828921560}
-  moveSpeed: 5
+  photonView: {fileID: 114402834695451356}
+  photonTransformView: {fileID: 114249114151710034}
+  moveSpeed: 4
   joystick: {fileID: 114314296398229816, guid: 09b1924822293495eb5ade7a552aeb29, type: 2}

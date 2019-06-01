@@ -5,19 +5,16 @@ using UnityEngine;
 
 public class Shotbullet : MonoBehaviour
 {
+	[SerializeField]
+	private PhotonView photonView;
+	[SerializeField]
+	private PhotonTransformView photonTransformView;
 	public Transform shotPlace;
 	public GameObject shellPrefab;
 	public float shotSpeed;
 	public AudioClip shotSound;
 	public static int bulletcount;
-	private PhotonView photonView;
-	private PhotonTransformView photonTransformView;
 
-	void Start()
-	{
-		photonTransformView = GetComponent<PhotonTransformView>();
-		photonView = PhotonView.Get(this);
-	}
 
 	public void ButtonShot()
 	{
