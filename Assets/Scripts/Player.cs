@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : Photon.MonoBehaviour
 {
+
 	[SerializeField]
 	private Button onFireButton;
 	[SerializeField]
@@ -10,6 +11,8 @@ public class Player : MonoBehaviour
 	public float moveSpeed = 10f;
 	public Joystick joystick;
 	private PhotonView photonView;
+	
+
 
 	void Start()
 	{
@@ -20,35 +23,24 @@ public class Player : MonoBehaviour
 		
 	}
 
-	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
 
 
-		if (stream.isWriting)
-		{
-			Rigidbody rigidbody = this.gameObject.GetComponent<Rigidbody>();
-			stream.SendNext(rigidbody.position);
-       		stream.SendNext(rigidbody.rotation);
-			stream.SendNext(rigidbody.velocity);
-		}
-		else
-		{
-			networkPosition = (Vector3)stream.ReceiveNext();
-       		networkRotation = (Quaternion)stream.ReceiveNext();
-			rigidbody.velocity = (Vector3)stream.ReceiveNext();
+	// 	if (stream.isWriting)
+	// 	{
+	// 		stream.SendNext(transform.position);
+    //    		stream.SendNext(transform.rotation);
 
+	// 		 //データの送信
+	// 	}
+	// 	else
+	// 	{
+	// 		 //データの受信
+    //         transform.position = (Vector3)stream.ReceiveNext();
+    //         transform.rotation = (Quaternion)stream.ReceiveNext();
+	// 	}		
+	// }
 
-       		float lag = Mathf.Abs((float)(PhotonNetwork.time - info.timestamp));
-       		networkPosition += (this.velocity * lag);
-		}		
-	}
-
-	public void FixedUpdate()
-	{
-		if (photonView.isMine){
-			rigidbody.position = Vector3.MoveTowards(this.position, networkPosition, Time.fixedDeltaTime);
-			rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-		}
-	}
 
 
 
@@ -71,8 +63,8 @@ public class Player : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Bullet"))
 		{
-			Destroy(this.gameObject);
-			Destroy(other.gameObject);
+			PhotonNetwork.Destroy(this.gameObject);
+			PhotonNetwork.Destroy(other.gameObject);
 		}
 	}
 }

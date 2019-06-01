@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bullet : MonoBehaviour
+public class bullet : Photon.MonoBehaviour
 {
 	public AudioClip reboundSound;
 	public int reboundcount;
@@ -30,7 +30,7 @@ public class bullet : MonoBehaviour
 					Shotbullet.bulletcount -= 1;
 				}
 
-				Destroy(this.gameObject);
+				PhotonNetwork.Destroy(this.gameObject);
 			}
 			else
 			{
@@ -46,7 +46,7 @@ public class bullet : MonoBehaviour
 			{
 				Shotbullet.bulletcount -= 1;
 			}
-			Destroy(this.gameObject);
+			PhotonNetwork.Destroy(this.gameObject);
 
 		}
 	}
