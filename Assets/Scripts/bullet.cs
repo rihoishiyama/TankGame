@@ -49,6 +49,17 @@ public class bullet : Photon.MonoBehaviour
 			PhotonNetwork.Destroy(this.gameObject);
 
 		}
+
+		if (other.gameObject.CompareTag("Player"))
+		{
+
+			if (photonView.isMine)
+			{
+				Shotbullet.bulletcount -= 1;
+			}
+			PhotonNetwork.Destroy(this.gameObject);
+
+		}
 	}
 
 }

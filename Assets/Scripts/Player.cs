@@ -63,8 +63,7 @@ public class Player : Photon.MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Bullet"))
 		{
-			PhotonNetwork.Destroy(this.gameObject);
-			PhotonNetwork.Destroy(other.gameObject);
+			Destroy(this.gameObject);
 		}
 	}
 }
