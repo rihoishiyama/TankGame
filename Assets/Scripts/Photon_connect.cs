@@ -11,15 +11,23 @@ public class Photon_connect : MonoBehaviour
 	public bool AutoConnect = true;
 	public byte Version = 1;
 	private bool ConnectInUpdate = true;
-	// cube生成
-	public void SpawnObject()
+    private PhotonView m_photonView = null;
+    private Vector3[] startPos = {new Vector3(16, 0, 12), new Vector3(-16, 0, 12), new Vector3(-16, 0, -12), new Vector3(16, 0, -12) };
+    // cube生成
+    public void SpawnObject()
 	{
 		GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity, 0);
 		if (!player.GetComponent<Rigidbody>())
 		{
 			player.gameObject.AddComponent<Rigidbody>();
 		}
-	}
+
+        m_photonView = player.GetComponent<PhotonView>();
+        int ownerID = m_photonView.ownerId;
+        Vector3 playerPos = player.transform.position;
+        playerPos = startPos[ownerID - 1];
+        player.transform.position = playerPos;
+    }
 	// 生成するcubeの座標をランダム生成
 	private Vector3 GetRandomPosition()
 	{
