@@ -9,11 +9,11 @@ public class Photon_position : MonoBehaviour
 	private float m_speed = 6.0f;
 	private PhotonView m_photonView = null;
 	private Renderer m_render = null;
-	private readonly Color[] MATERIAL_COLORS = new Color[]
-	{
-		Color.white, Color.red, Color.green, Color.blue, Color.green,
-	};
-
+	
+    private readonly Color[] MATERIAL_COLORS = new Color[]
+    {
+        Color.white, Color.red, Color.green, Color.blue, Color.black, Color.yellow, Color.cyan, Color.magenta, Color.gray
+    };
 	private Text text;
 	GameObject game;
 
@@ -27,15 +27,19 @@ public class Photon_position : MonoBehaviour
 	private PhotonTransformView photonTransformView;
 	private CharacterController characterController;
 
-	void Start()
-	{
-		photonTransformView = GetComponent<PhotonTransformView>();
-		photonView = PhotonView.Get(this);
-		game = GameObject.Find("Text");
-		//text = game.GetComponent<Text>();
-		int ownerID = m_photonView.ownerId;
-		m_render.material.color = MATERIAL_COLORS[ownerID];
-	}
+    void Start()
+    {
+        photonTransformView = GetComponent<PhotonTransformView>();
+        photonView = PhotonView.Get(this);
+        game = GameObject.Find("Text");
+        //text = game.GetComponent<Text>();
+
+        int ownerID = m_photonView.ownerId;
+        m_render.material.color = MATERIAL_COLORS[ownerID%10];
+        Debug.Log(ownerID % 10);
+        Debug.Log(ownerID);
+
+    }
 
 	void Update()
 	{
@@ -53,5 +57,6 @@ public class Photon_position : MonoBehaviour
 		pos.x += Input.GetAxis("Horizontal") * m_speed * Time.deltaTime;
 		pos.y += Input.GetAxis("Vertical") * m_speed * Time.deltaTime;
 		transform.position = pos;
+
 	} // class DemoObject
 }
