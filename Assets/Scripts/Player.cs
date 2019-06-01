@@ -12,6 +12,8 @@ public class Player : Photon.MonoBehaviour
 	private PhotonView photonView;
 	[SerializeField]
 	private PhotonTransformView photonTransformView;
+	private Vector3 playerSpeed;
+	private Transform networkTransform;
 	public float moveSpeed = 10f;
 	public Joystick joystick;
 
@@ -23,22 +25,34 @@ public class Player : Photon.MonoBehaviour
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
 	}
 
-	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-	// {
-	// 	if (stream.isWriting)
-	// 	{
-	// 		stream.SendNext(transform.position);
-	// 		stream.SendNext(transform.rotation);
+	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		if (stream.isWriting)
+		{
+			stream.SendNext(transform.position);
+			stream.SendNext(transform.rotation);
 
-	// 		//データの送信
-	// 	}
-	// 	else
-	// 	{
-	// 		//データの受信
-	// 		transform.position = (Vector3)stream.ReceiveNext();
-	// 		transform.rotation = (Quaternion)stream.ReceiveNext();
-	// 	}
-	// }
+			//データの送信
+		}
+		else
+		{
+			//データの受信
+			networkTransform.position = (Vector3)stream.ReceiveNext();
+			networkTransform.rotation = (Quaternion)stream.ReceiveNext();
+
+			float lag = Mathf.Abs((float)(PhotonNetwork.time - info.timestamp));
+			networkTransform.position += (playerSpeed * lag);
+		}
+	}
+
+	public void FixedUpdate()
+	{
+		if (!photonView.isMine)
+		{
+			transform.position = Vector3.MoveTowards(transform.position, networkTransform.position, Time.fixedDeltaTime);
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, networkTransform.rotation, Time.fixedDeltaTime * 100.0f);
+		}
+	}
 
 	void Update()
 	{
@@ -50,6 +64,7 @@ public class Player : Photon.MonoBehaviour
 			{
 				transform.rotation = Quaternion.LookRotation(moveVector);
 				transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
+				playerSpeed = moveVector * moveSpeed * Time.deltaTime;
 			}
 		}
 	}
