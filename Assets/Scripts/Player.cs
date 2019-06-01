@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Player : Photon.MonoBehaviour
 {
+	PhotonView m_photonView;
 
 	[SerializeField]
 	private Button onFireButton;
@@ -21,8 +22,22 @@ public class Player : Photon.MonoBehaviour
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
+
+		m_photonView = GetComponent<PhotonView> ();
 		
 	}
+
+    public void TakeDamage(GameObject i_projectile) {
+        
+        if(m_photonView.isMine) {
+            return;
+        }
+
+        // 所有権の移譲
+        i_projectile.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
+		PhotonNetwork.Destroy (i_projectile);
+        PhotonNetwork.Destroy (this.gameObject);
+    }
 
 	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
 
