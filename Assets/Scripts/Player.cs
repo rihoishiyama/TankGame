@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : Photon.MonoBehaviour
 {
+
 	[SerializeField]
 	private Button onFireButton;
 	[SerializeField]
@@ -13,14 +14,36 @@ public class Player : MonoBehaviour
 	private PhotonTransformView photonTransformView;
 	public float moveSpeed = 10f;
 	public Joystick joystick;
-	
+
 
 	void Start()
 	{
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
+		
 	}
+
+	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+
+
+	// 	if (stream.isWriting)
+	// 	{
+	// 		stream.SendNext(transform.position);
+    //    		stream.SendNext(transform.rotation);
+
+	// 		 //データの送信
+	// 	}
+	// 	else
+	// 	{
+	// 		 //データの受信
+    //         transform.position = (Vector3)stream.ReceiveNext();
+    //         transform.rotation = (Quaternion)stream.ReceiveNext();
+	// 	}		
+	// }
+
+
+
 
 
 	void Update()
@@ -41,8 +64,7 @@ public class Player : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Bullet"))
 		{
-			Destroy(this.gameObject);
-			Destroy(other.gameObject);
+			PhotonNetwork.Destroy(this.gameObject);
 		}
 	}
 }

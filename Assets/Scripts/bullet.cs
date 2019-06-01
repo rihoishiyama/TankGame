@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bullet : MonoBehaviour
+public class bullet : Photon.MonoBehaviour
 {
 	[SerializeField]
 	private PhotonView photonView;
@@ -26,7 +26,7 @@ public class bullet : MonoBehaviour
 					Shotbullet.bulletcount -= 1;
 				}
 
-				Destroy(this.gameObject);
+				PhotonNetwork.Destroy(this.gameObject);
 			}
 			else
 			{
@@ -41,7 +41,18 @@ public class bullet : MonoBehaviour
 			{
 				Shotbullet.bulletcount -= 1;
 			}
-			Destroy(this.gameObject);
+			PhotonNetwork.Destroy(this.gameObject);
+
+		}
+
+		if (other.gameObject.CompareTag("Player"))
+		{
+
+			if (photonView.isMine)
+			{
+				Shotbullet.bulletcount -= 1;
+			}
+			PhotonNetwork.Destroy(this.gameObject);
 
 		}
 	}
