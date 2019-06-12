@@ -23,6 +23,7 @@ public class Player : Photon.MonoBehaviour
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
+		networkTransform = transform;
 	}
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -42,17 +43,10 @@ public class Player : Photon.MonoBehaviour
 
 			float lag = Mathf.Abs((float)(PhotonNetwork.time - info.timestamp));
 			networkTransform.position += (playerSpeed * lag);
+			Debug.Log("lag generate: " + lag);
 		}
 	}
 
-	public void FixedUpdate()
-	{
-		if (!photonView.isMine)
-		{
-			transform.position = Vector3.MoveTowards(transform.position, networkTransform.position, Time.fixedDeltaTime);
-			transform.rotation = Quaternion.RotateTowards(transform.rotation, networkTransform.rotation, Time.fixedDeltaTime * 100.0f);
-		}
-	}
 
 	void Update()
 	{
@@ -66,6 +60,12 @@ public class Player : Photon.MonoBehaviour
 				transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
 				playerSpeed = moveVector * moveSpeed * Time.deltaTime;
 			}
+		}
+
+		if (!photonView.isMine)
+		{
+			transform.position = Vector3.MoveTowards(transform.position, networkTransform.position, Time.fixedDeltaTime);
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, networkTransform.rotation, Time.fixedDeltaTime * 100.0f);
 		}
 	}
 
