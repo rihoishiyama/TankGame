@@ -66,11 +66,11 @@ public class Player : Photon.MonoBehaviour
 		}
 	}
 
-	//private void OnCollisionEnter(Collision other)
-	//{
-		//if (other.gameObject.CompareTag("Bullet"))
-		//{
-			//PhotonNetwork.Destroy(this.gameObject);
-		//}
-	//}
+	private void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.CompareTag("Bullet"))
+		{
+			PhotonNetwork.Destroy(this.gameObject);
+		}
+	}
 }
