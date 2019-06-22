@@ -28,19 +28,6 @@ public class Player : Photon.MonoBehaviour
 		
 	}
 
-	public void TakeDamage(GameObject i_projectile) {
-        Debug.Log (string.Format("{0}に攻撃が当たった", this.gameObject.name));
-
-        if(!m_photonView.isMine) {
-            return;
-        }
-
-        // 所有権の移譲
-        i_projectile.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
-        PhotonNetwork.Destroy (i_projectile);
-		PhotonNetwork.Destroy (this.gameObject);
-    }
-
 
     
 	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){

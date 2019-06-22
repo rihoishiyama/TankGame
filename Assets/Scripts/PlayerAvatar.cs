@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
+using UnityEngine.UI;
 
-public class PlayerAvatar : Photon.MonoBehaviour {
-
-    PhotonView m_photonView;
+public class PlayerAvator : Photon.MonoBehaviour
+{
+	PhotonView m_photonView;
 
     void Start() {
         m_photonView = GetComponent<PhotonView> ();
@@ -20,7 +19,7 @@ public class PlayerAvatar : Photon.MonoBehaviour {
         // 所有権の移譲
         i_projectile.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
         PhotonNetwork.Destroy (i_projectile);
-		PhotonNetwork.Destroy (this.gameObject);
+        PhotonNetwork.Destroy (this.gameObject);
     }
 
 }

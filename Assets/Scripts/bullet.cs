@@ -53,7 +53,7 @@ public class bullet : Photon.MonoBehaviour
 			{
 				Shotbullet.bulletcount -= 1;
 			}
-			other.gameObject.GetComponent<Player> ().TakeDamage (this.gameObject);
+			PhotonNetwork.Destroy(other.gameObject);
 			PhotonNetwork.Destroy(this.gameObject);
 
 		}
