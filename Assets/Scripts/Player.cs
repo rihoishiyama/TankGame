@@ -70,6 +70,7 @@ public class Player : Photon.MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Bullet"))
 		{
+			this.gameObject.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
 			PhotonNetwork.Destroy(this.gameObject);
 		}
 	}
