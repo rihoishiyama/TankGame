@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Player : Photon.MonoBehaviour, IPunObservable
 {
+	PhotonView m_photonView;
 
 	[SerializeField]
 	private Button onFireButton;
@@ -29,11 +30,40 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 		endRotation = transform.rotation;
 	}
 
+
 	void Start()
 	{
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
 		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
+<<<<<<< HEAD
+
+		m_photonView = GetComponent<PhotonView> ();
+		
+	}
+
+
+    
+	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+
+
+	// 	if (stream.isWriting)
+	// 	{
+	// 		stream.SendNext(transform.position);
+    //    		stream.SendNext(transform.rotation);
+
+	// 		 //データの送信
+	// 	}
+	// 	else
+	// 	{
+	// 		 //データの受信
+    //         transform.position = (Vector3)stream.ReceiveNext();
+    //         transform.rotation = (Quaternion)stream.ReceiveNext();
+	// 	}		
+	// }
+
+
+=======
 	}
 
 	void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -42,6 +72,7 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 		{
 			stream.SendNext(transform.position);
 			stream.SendNext(transform.rotation);
+>>>>>>> 23f5a3a86896aedaf46b9e3900b17897d6f5634b
 
 			//データの送信
 		}
@@ -81,6 +112,7 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 	{
 		if (other.gameObject.CompareTag("Bullet"))
 		{
+			this.gameObject.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
 			PhotonNetwork.Destroy(this.gameObject);
 		}
 	}
