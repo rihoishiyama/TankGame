@@ -47,12 +47,7 @@ public class bullet : Photon.MonoBehaviour
 
 		if (other.gameObject.CompareTag("Player"))
 		{
-<<<<<<< HEAD
 			if (photonView.isMine)
-=======
-
-			if (photonview.isMine)
->>>>>>> 23f5a3a86896aedaf46b9e3900b17897d6f5634b
 			{
 				Shotbullet.bulletcount -= 1;
 			}
