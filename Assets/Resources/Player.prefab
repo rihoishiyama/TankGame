@@ -287,7 +287,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1424018011616008}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6f62639e7d35b4f04ac06109b2effb96, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -466,7 +466,7 @@ MonoBehaviour:
     DrawErrorGizmo: 1
   m_RotationModel:
     SynchronizeEnabled: 1
-    InterpolateOption: 0
+    InterpolateOption: 2
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
   m_ScaleModel:
@@ -486,7 +486,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonView: {fileID: 114063422904798140}
-  photonTransformView: {fileID: 114180096286127724}
   shotPlace: {fileID: 4536291112479896}
   shellPrefab: {fileID: 1853334949596596, guid: 7457c45e7a6214211801bb61d44f92fe,
     type: 2}
@@ -547,7 +546,6 @@ MonoBehaviour:
   onFireButton: {fileID: 114287887896595964, guid: 09b1924822293495eb5ade7a552aeb29,
     type: 2}
   shotBullet: {fileID: 114348152828921560}
-  photonView: {fileID: 114402834695451356}
-  photonTransformView: {fileID: 114249114151710034}
+  photonview: {fileID: 114402834695451356}
   moveSpeed: 4
   joystick: {fileID: 114314296398229816, guid: 09b1924822293495eb5ade7a552aeb29, type: 2}
