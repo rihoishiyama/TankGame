@@ -5,9 +5,7 @@ using UnityEngine;
 public class bullet : Photon.MonoBehaviour
 {
 	[SerializeField]
-	private PhotonView photonView;
-	[SerializeField]
-	private PhotonTransformView photonTransformView;
+	private PhotonView photonview;
 	public AudioClip reboundSound;
 	public int reboundcount;
 
@@ -37,7 +35,7 @@ public class bullet : Photon.MonoBehaviour
 		if (other.gameObject.CompareTag("Bullet"))
 		{
 
-			if (photonView.isMine)
+			if (photonview.isMine)
 			{
 				Shotbullet.bulletcount -= 1;
 			}
@@ -48,7 +46,7 @@ public class bullet : Photon.MonoBehaviour
 		if (other.gameObject.CompareTag("Player"))
 		{
 
-			if (photonView.isMine)
+			if (photonview.isMine)
 			{
 				Shotbullet.bulletcount -= 1;
 			}

@@ -7,14 +7,11 @@ public class Shotbullet : MonoBehaviour
 {
 	[SerializeField]
 	private PhotonView photonView;
-	[SerializeField]
-	private PhotonTransformView photonTransformView;
 	public Transform shotPlace;
 	public GameObject shellPrefab;
 	public float shotSpeed;
 	public AudioClip shotSound;
 	public static int bulletcount;
-
 
 	public void ButtonShot()
 	{
