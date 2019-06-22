@@ -11,6 +11,7 @@ public class bullet : Photon.MonoBehaviour
 	public AudioClip reboundSound;
 	public int reboundcount;
 
+
 	void OnCollisionEnter(Collision other)
 	{
 
@@ -18,6 +19,7 @@ public class bullet : Photon.MonoBehaviour
 		{
 
 			reboundcount += 1;
+			var hit = other.gameObject;
 
 			if (reboundcount > 1)
 			{
@@ -51,8 +53,10 @@ public class bullet : Photon.MonoBehaviour
 			{
 				Shotbullet.bulletcount -= 1;
 			}
+			other.gameObject.GetComponent<Player> ().TakeDamage (this.gameObject);
 			PhotonNetwork.Destroy(this.gameObject);
 
 		}
-	}
+    }
+	
 }

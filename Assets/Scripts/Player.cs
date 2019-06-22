@@ -17,6 +17,7 @@ public class Player : Photon.MonoBehaviour
 	public Joystick joystick;
 
 
+
 	void Start()
 	{
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
@@ -27,18 +28,21 @@ public class Player : Photon.MonoBehaviour
 		
 	}
 
-    public void TakeDamage(GameObject i_projectile) {
-        
-        if(m_photonView.isMine) {
+	public void TakeDamage(GameObject i_projectile) {
+        Debug.Log (string.Format("{0}に攻撃が当たった", this.gameObject.name));
+
+        if(!m_photonView.isMine) {
             return;
         }
 
         // 所有権の移譲
         i_projectile.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
-		PhotonNetwork.Destroy (i_projectile);
-        PhotonNetwork.Destroy (this.gameObject);
+        PhotonNetwork.Destroy (i_projectile);
+		PhotonNetwork.Destroy (this.gameObject);
     }
 
+
+    
 	// public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
 
 
@@ -75,11 +79,11 @@ public class Player : Photon.MonoBehaviour
 		}
 	}
 
-	private void OnCollisionEnter(Collision other)
-	{
-		if (other.gameObject.CompareTag("Bullet"))
-		{
-			PhotonNetwork.Destroy(this.gameObject);
-		}
-	}
+	//private void OnCollisionEnter(Collision other)
+	//{
+		//if (other.gameObject.CompareTag("Bullet"))
+		//{
+			//PhotonNetwork.Destroy(this.gameObject);
+		//}
+	//}
 }
