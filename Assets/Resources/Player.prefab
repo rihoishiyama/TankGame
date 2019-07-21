@@ -548,4 +548,5 @@ MonoBehaviour:
   shotBullet: {fileID: 114348152828921560}
   photonview: {fileID: 114402834695451356}
   moveSpeed: 4
+  dieSound: {fileID: 8300000, guid: 3cf2ff3935eac42108f8a4f4df606883, type: 3}
   joystick: {fileID: 114314296398229816, guid: 09b1924822293495eb5ade7a552aeb29, type: 2}

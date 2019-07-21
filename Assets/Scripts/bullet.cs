@@ -17,7 +17,6 @@ public class bullet : Photon.MonoBehaviour
 		{
 
 			reboundcount += 1;
-			var hit = other.gameObject;
 
 			if (reboundcount > 1)
 			{
@@ -37,7 +36,7 @@ public class bullet : Photon.MonoBehaviour
 		if (other.gameObject.CompareTag("Bullet"))
 		{
 
-			if (photonview.isMine)
+			if (photonView.isMine)
 			{
 				Shotbullet.bulletcount -= 1;
 			}
@@ -51,7 +50,6 @@ public class bullet : Photon.MonoBehaviour
 			{
 				Shotbullet.bulletcount -= 1;
 			}
-			PhotonNetwork.Destroy(other.gameObject);
 			PhotonNetwork.Destroy(this.gameObject);
 
 		}

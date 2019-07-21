@@ -20,6 +20,7 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 	private Quaternion endRotation;
 	private float elapsedTime = 0f;
 	public float moveSpeed = 10f;
+	public AudioClip dieSound;
 	public Joystick joystick;
 
 	void Awake()
@@ -84,6 +85,7 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 	{
 		if (other.gameObject.CompareTag("Bullet"))
 		{
+			AudioSource.PlayClipAtPoint(dieSound, transform.position);
 			this.gameObject.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
 			PhotonNetwork.Destroy(this.gameObject);
 		}
