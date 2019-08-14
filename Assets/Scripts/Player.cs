@@ -85,7 +85,7 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 	{
 		if (other.gameObject.CompareTag("Bullet"))
 		{
-			AudioSource.PlayClipAtPoint(dieSound, transform.position);
+			AudioSource.PlayClipAtPoint(dieSound, transform.position); 
 			this.gameObject.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
 			PhotonNetwork.Destroy(this.gameObject);
 		}

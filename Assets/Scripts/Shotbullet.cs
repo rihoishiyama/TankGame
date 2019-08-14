@@ -25,6 +25,11 @@ public class Shotbullet : MonoBehaviour
 				// ②効果音を再生する。
 				AudioSource.PlayClipAtPoint(shotSound, transform.position);
 				bulletcount += 1;
+				Debug.Log("ルーム閉じる。");
+				PhotonNetwork.room.name = "newRoomName";
+				PhotonNetwork.room.open = false;
+				PhotonNetwork.room.visible = false;
+
 			}
 			else
 			{

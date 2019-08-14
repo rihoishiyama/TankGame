@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.IO;
 public class Photon_connect : MonoBehaviour
 {
 	[SerializeField]
 	private string m_resourcePath = "";
 	[SerializeField]
 	private float m_randomCircle = 4.0f;
-	private const string ROOM_NAME = "RoomA";
+	private string ROOM_NAME = "";
 	public bool AutoConnect = true;
 	public byte Version = 1;
 	private bool ConnectInUpdate = true;
@@ -42,6 +44,7 @@ public class Photon_connect : MonoBehaviour
 			ConnectInUpdate = false;
 			PhotonNetwork.ConnectUsingSettings(Version + "." + SceneManagerHelper.ActiveSceneBuildIndex);
 		}
+
 		//if (Input.GetMouseButton(0))
 		//{
 		//    SpawnObject();
@@ -54,9 +57,59 @@ public class Photon_connect : MonoBehaviour
 		//PhotonNetwork.CreateRoom(null, new RoomOptions() { MaxPlayers = 4 }, null);
 		PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, new RoomOptions(), TypedLobby.Default);
 	}
+
+	void OnJoinedLobby()
+    {
+        Debug.Log("OnJoinedLobby() was called by PUN.");
+
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 4;
+        roomOptions.IsOpen = true;
+        roomOptions.IsVisible = true;
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+    void OnPhotonRandomJoinFailed()
+    {
+
+        foreach (string str in Enumerable.Range(0, 1).Select((n) => Path.GetRandomFileName()))
+        {
+            ROOM_NAME = str;
+            Debug.Log(ROOM_NAME);
+        }
+
+        PhotonNetwork.CreateRoom(ROOM_NAME);
+        Debug.Log("ルーム入室に失敗したのでルームを作成します");
+    }
+
+
+
+
+
+
+
+
 	public void OnJoinedRoom()
 	{
 		Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room. From here on, your game would be running. For reference, all callbacks are listed in enum: PhotonNetworkingMessage");
 		SpawnObject();
 	}
+	void OnReceivedRoomListUpdate()
+    {
+        //ルーム一覧を取る
+        RoomInfo[] rooms = PhotonNetwork.GetRoomList();
+        if (rooms.Length == 0)
+        {
+            Debug.Log("ルームが一つもありません");
+        }
+        else
+        {
+            //ルームが1件以上ある時ループでRoomInfo情報をログ出力
+            for (int i = 0; i < rooms.Length; i++)
+            {
+                Debug.Log("RoomName:" + rooms[i].name);
+            }
+        }
+    }
+
 }
