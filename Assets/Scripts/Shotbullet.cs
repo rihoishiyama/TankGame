@@ -26,9 +26,9 @@ public class Shotbullet : MonoBehaviour
 				AudioSource.PlayClipAtPoint(shotSound, transform.position);
 				bulletcount += 1;
 				Debug.Log("ルーム閉じる。");
-				PhotonNetwork.room.name = "newRoomName";
-				PhotonNetwork.room.open = false;
-				PhotonNetwork.room.visible = false;
+				//PhotonNetwork.room.name = "newRoomName";
+				//PhotonNetwork.room.open = false;
+				//PhotonNetwork.room.visible = false;
 
 			}
 			else

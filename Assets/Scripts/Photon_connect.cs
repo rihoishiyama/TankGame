@@ -45,18 +45,9 @@ public class Photon_connect : MonoBehaviour
 			PhotonNetwork.ConnectUsingSettings(Version + "." + SceneManagerHelper.ActiveSceneBuildIndex);
 		}
 
-		//if (Input.GetMouseButton(0))
-		//{
-		//    SpawnObject();
-		//}
+
 	}
-	public virtual void OnConnectedToMaster()
-	{
-		Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
-		//PhotonNetwork.JoinRandomRoom();
-		//PhotonNetwork.CreateRoom(null, new RoomOptions() { MaxPlayers = 4 }, null);
-		PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, new RoomOptions(), TypedLobby.Default);
-	}
+	
 
 	void OnJoinedLobby()
     {
@@ -77,8 +68,12 @@ public class Photon_connect : MonoBehaviour
             ROOM_NAME = str;
             Debug.Log(ROOM_NAME);
         }
+		RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 4;
+        roomOptions.IsOpen = true;
+        roomOptions.IsVisible = true;
 
-        PhotonNetwork.CreateRoom(ROOM_NAME);
+        PhotonNetwork.CreateRoom(ROOM_NAME, roomOptions, TypedLobby.Default);
         Debug.Log("ルーム入室に失敗したのでルームを作成します");
     }
 

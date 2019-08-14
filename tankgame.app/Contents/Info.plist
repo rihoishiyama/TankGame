@@ -10,7 +10,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>tankgame0622</string>
+	<string>tankgame</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Unity Player version 2017.2.3p4 (2f2d0e6b4eb5). (c) 2018 Unity Technologies ApS. All rights reserved.</string>
 	<key>CFBundleIconFile</key>

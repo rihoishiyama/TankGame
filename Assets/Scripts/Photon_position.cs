@@ -15,7 +15,7 @@ public class Photon_position : MonoBehaviour
 	private Renderer m_render = null;
 	private readonly Color[] MATERIAL_COLORS = new Color[]
 	{
-		Color.white, Color.red, Color.green, Color.blue, Color.green,
+		Color.white, Color.red, Color.green, Color.blue, Color.black,
 	};
 
 	private Text text;
