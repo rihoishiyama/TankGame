@@ -14,8 +14,7 @@ public class loadScene : MonoBehaviour {
 	void Update () {
 		if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("MatchingRoom");
         }
-		
 	}
 }
