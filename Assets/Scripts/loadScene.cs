@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class loadScene : MonoBehaviour {
+public class loadScene : MonoBehaviour
+{
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start()
+	{
+
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
 		if (Input.GetMouseButtonDown(0))
-        {
-            SceneManager.LoadScene("MatchingRoom");
-        }
+		{
+			SceneManager.LoadScene("MatchingRoom");
+		}
+	}
+
+	public static void LoadMainGameRoom()
+	{
+		SceneManager.LoadScene("Main");
 	}
 }
