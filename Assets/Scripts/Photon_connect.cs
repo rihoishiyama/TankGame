@@ -17,6 +17,7 @@ public class Photon_connect : MonoBehaviour
 	private PhotonView m_photonView = null;
 	private Vector3[] startPos = { new Vector3(16, 0, 12), new Vector3(-16, 0, 12), new Vector3(-16, 0, -12), new Vector3(16, 0, -12) };
 
+	private bool isManualOnConnect = false;
 	public bool IsMakeRoomFailed { get; private set; }
 
 	// cube生成
@@ -54,6 +55,11 @@ public class Photon_connect : MonoBehaviour
 			ConnectInUpdate = false;
 			PhotonNetwork.ConnectUsingSettings(Version + "." + SceneManagerHelper.ActiveSceneBuildIndex);
 		}
+		if (isManualOnConnect)
+		{
+			OnConnectedToMaster();
+			isManualOnConnect = false;
+		}
 		//if (Input.GetMouseButton(0))
 		//{
 		//    SpawnObject();
@@ -78,7 +84,7 @@ public class Photon_connect : MonoBehaviour
 			else if (matchingController.isJoin)
 			{
 				// join失敗したらofflineになるかも?
-				PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, new RoomOptions(), TypedLobby.Default);
+				PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, new RoomOptions() { MaxPlayers=4 }, TypedLobby.Default);
 				Debug.Log("JoinRoomCOmplete");
 			}
 			else
@@ -101,5 +107,6 @@ public class Photon_connect : MonoBehaviour
 		Debug.Log("OnCreateRoom() called by PUN. But Failed so RoomName is exist.");
 		IsMakeRoomFailed = true;
 		matchingController.ReMatching();
+		isManualOnConnect = true;
 	}
 }
