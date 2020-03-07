@@ -29,6 +29,8 @@ public class ButtonController : MonoBehaviour
 	private GameObject randomRoomObj;
 	[SerializeField]
 	private GameObject undoButtonObj;
+	[SerializeField]
+	private InputField inputPlayerName;
 
 	public string roomName;
 	public bool isCreate;
@@ -41,7 +43,7 @@ public class ButtonController : MonoBehaviour
 		Init();
 	}
 
-	private void Init()
+	private void Init(bool isCreateFailed = false)
 	{
 		LoadCanvas(false, true);
 		isCreate = false;
@@ -50,7 +52,8 @@ public class ButtonController : MonoBehaviour
 		isRandomJoin = false;
 		roomName = "";
 		inputField.text = "";
-		ActiveJoinOrCreateButtons(true);
+		inputPlayerName.text = "";
+		ActiveJoinOrCreateButtons(isCreateFailed);
 		roomNameInputFieldObj.SetActive(false);
 		warningTextObj.SetActive(false);
 		cautionTextObj.SetActive(false);
@@ -79,6 +82,14 @@ public class ButtonController : MonoBehaviour
 		{
 			LoadCanvas(true, true);
 		}
+	}
+
+	public void GetPlayerName()
+	{
+		PhotonNetwork.playerName = "guest" +Random.Range(1000, 9999);
+		Debug.Log("playerName: "+ PhotonNetwork.playerName);
+		ActiveJoinOrCreateButtons(true);
+		inputPlayerName.gameObject.SetActive(false);
 	}
 
 	public void PushCreateButton()
@@ -137,7 +148,7 @@ public class ButtonController : MonoBehaviour
 	{
 		if (connect.IsMakeRoomFailed)
 		{
-			Init();
+			Init(true);
 		}
 	}
 

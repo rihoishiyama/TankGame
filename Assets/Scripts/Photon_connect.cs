@@ -1,9 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UniRx;
 
 public class Photon_connect : MonoBehaviour
 {
+	[SerializeField]
+	private Button startButton;
+	[SerializeField]
+	private CanvasGroup touchBlockCanvas;
+	[SerializeField]
+	private CanvasGroup joystickCanvasGroup;
 	[SerializeField]
 	private ButtonController matchingController;
 	[SerializeField]
@@ -16,9 +25,28 @@ public class Photon_connect : MonoBehaviour
 	private bool ConnectInUpdate = true;
 	private PhotonView m_photonView = null;
 	private Vector3[] startPos = { new Vector3(16, 0, 12), new Vector3(-16, 0, 12), new Vector3(-16, 0, -12), new Vector3(16, 0, -12) };
-
+	private ReactiveProperty<int> roomPlayerCount;
 	private bool isManualOnConnect = false;
+	private bool isReady;
 	public bool IsMakeRoomFailed { get; private set; }
+
+
+	private void Start()
+	{
+		Init();
+	}
+
+	private void Init()
+	{
+		isReady = false;
+		isManualOnConnect = false;
+		IsMakeRoomFailed = false;
+		touchBlockCanvas.blocksRaycasts = true;
+		startButton.interactable = false;
+		startButton.gameObject.SetActive(true);
+		joystickCanvasGroup.interactable = false;
+		joystickCanvasGroup.blocksRaycasts = false;
+	}
 
 	// cube生成
 	public void SpawnObject()
@@ -41,7 +69,7 @@ public class Photon_connect : MonoBehaviour
 	// 生成するcubeの座標をランダム生成
 	private Vector3 GetRandomPosition()
 	{
-		var rand = Random.insideUnitCircle * m_randomCircle;
+		var rand = UnityEngine.Random.insideUnitCircle * m_randomCircle;
 		return rand;
 	}
 
@@ -59,6 +87,13 @@ public class Photon_connect : MonoBehaviour
 		{
 			OnConnectedToMaster();
 			isManualOnConnect = false;
+		}
+		if (isReady)
+		{
+			if (roomPlayerCount.Value != PhotonNetwork.playerList.Length)
+			{
+				roomPlayerCount.Value = PhotonNetwork.playerList.Length;
+			}
 		}
 		//if (Input.GetMouseButton(0))
 		//{
@@ -89,7 +124,7 @@ public class Photon_connect : MonoBehaviour
 			}
 			else
 			{
-				PhotonNetwork.CreateRoom(ROOM_NAME, new RoomOptions(), TypedLobby.Default);
+				PhotonNetwork.CreateRoom(ROOM_NAME, new RoomOptions() { MaxPlayers=4 }, TypedLobby.Default);
 				Debug.Log("CreateRoomComplete");
 			}
 		}
@@ -99,14 +134,61 @@ public class Photon_connect : MonoBehaviour
 	{
 		Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room. From here on, your game would be running. For reference, all callbacks are listed in enum: PhotonNetworkingMessage");
 		SpawnObject();
+		SetRoomPlayerCount();
 	}
 
 	public void OnPhotonCreateRoomFailed()
 	{
 		// ルーム作成失敗時
 		Debug.Log("OnCreateRoom() called by PUN. But Failed so RoomName is exist.");
+		Init();
 		IsMakeRoomFailed = true;
 		matchingController.ReMatching();
 		isManualOnConnect = true;
+	}
+
+	private void SetRoomPlayerCount()
+	{
+		roomPlayerCount = new ReactiveProperty<int>();
+        roomPlayerCount.Value = PhotonNetwork.playerList.Length;
+        IDisposable subscription = roomPlayerCount.Subscribe(x => {
+			Debug.Log("PlayerValue:"+roomPlayerCount.Value);
+            if (roomPlayerCount.Value > 1)
+            {
+				ActiveStartButton(true);
+            }
+			else
+			{
+				ActiveStartButton(false);
+			}
+        });
+        Debug.Log("UniRxStart: " + roomPlayerCount.Value);
+		isReady = true;
+	}
+
+	private void ActiveStartButton(bool isActive)
+	{
+		if(isActive && PhotonNetwork.isMasterClient)
+		{
+			startButton.interactable = true;
+			touchBlockCanvas.blocksRaycasts = false;
+		}
+		else
+		{
+			startButton.interactable = false;
+			touchBlockCanvas.interactable = false;
+		}
+	}
+
+	public void PushStartButton()
+	{
+		if (!PhotonNetwork.isMasterClient) return;
+
+		// startAnimationを流した後
+		touchBlockCanvas.interactable = false;
+		touchBlockCanvas.blocksRaycasts = false;
+		joystickCanvasGroup.interactable = true;
+		joystickCanvasGroup.blocksRaycasts = true;
+		startButton.gameObject.SetActive(false);
 	}
 }
