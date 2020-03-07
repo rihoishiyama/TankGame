@@ -24,6 +24,7 @@ public class Photon_connect : MonoBehaviour
 
         m_photonView = player.GetComponent<PhotonView>();
         int ownerID = m_photonView.ownerId;
+        Debug.Log(ownerID);
         Vector3 playerPos = player.transform.position;
         playerPos = startPos[(ownerID - 1) % 4];
         player.transform.position = playerPos;
@@ -42,12 +43,13 @@ public class Photon_connect : MonoBehaviour
 			ConnectInUpdate = false;
 			PhotonNetwork.ConnectUsingSettings(Version + "." + SceneManagerHelper.ActiveSceneBuildIndex);
 		}
-		//if (Input.GetMouseButton(0))
-		//{
-		//    SpawnObject();
-		//}
-	}
-	public virtual void OnConnectedToMaster()
+
+        //if (Input.GetMouseButton(0))
+        //{
+        //    SpawnObject();
+        //}
+    }
+    public virtual void OnConnectedToMaster()
 	{
 		Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
 		//PhotonNetwork.JoinRandomRoom();

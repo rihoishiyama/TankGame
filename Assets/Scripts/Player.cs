@@ -6,11 +6,12 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 	PhotonView m_photonView;
 
 	[SerializeField]
-	private Button onFireButton;
+    private Button onFireButton;
 	[SerializeField]
 	private Shotbullet shotBullet;
 	[SerializeField]
 	private PhotonView photonview;
+
 
 	private const float InterpolationDuration = 0.2f;
 
@@ -19,11 +20,12 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 	private Quaternion startRotation;
 	private Quaternion endRotation;
 	private float elapsedTime = 0f;
+    [SerializeField]private GuiManager guiManager;
 	public float moveSpeed = 10f;
 	public AudioClip dieSound;
 	public Joystick joystick;
 
-	void Awake()
+    void Awake()
 	{
 		startPosition = transform.position;
 		endPosition = transform.position;
@@ -36,8 +38,9 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 	{
 		joystick = GameObject.Find("Joystick").GetComponent<Joystick>();
 		onFireButton = GameObject.Find("OnFireButton").GetComponent<Button>();
-		onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
+        onFireButton.onClick.AddListener(() => shotBullet.ButtonShot());
         m_photonView = GetComponent<PhotonView>();
+        guiManager = GameObject.Find("Canvas").GetComponent<GuiManager>();
 	}
 
 	void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -87,7 +90,8 @@ public class Player : Photon.MonoBehaviour, IPunObservable
 		{
 			AudioSource.PlayClipAtPoint(dieSound, transform.position);
 			this.gameObject.GetComponent<PhotonView> ().TransferOwnership (PhotonNetwork.player.ID);
-			PhotonNetwork.Destroy(this.gameObject);
+            guiManager.gameOverPanel.SetActive(true);
+            PhotonNetwork.Destroy(this.gameObject);
 		}
 	}
 }
